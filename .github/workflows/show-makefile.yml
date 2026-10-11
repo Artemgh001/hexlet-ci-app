@@ -1,18 +1,21 @@
-# file: 
 name: show-makefile
-# on определяет события, которые запускают воркфлоу
+
 on: push
+
 jobs:
-  # build это произвольно выбранное имя задания
-  # их может быть больше одного
   build:
-    # операционная система для работы воркфлоу
     runs-on: ubuntu-latest
-    steps: # список шагов, которые надо выполнить
-      # экшен выполняет какую-то задачу
-      # checkout клонирует репозиторий
+    steps:
       - uses: actions/checkout@v4
-      # run это произвольная bash-команда
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - run: make setup
       - run: make lint
       - run: make test
